@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:23:33 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/11 16:59:38 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:04:19 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_box	*create_box(t_box *queue, int y, int x)
 	}
 	box->y = y;
 	box->x = x;
+	box->next = NULL;
 	return (box);
 }
 
@@ -39,12 +40,13 @@ void	enque(t_box *queue, int y, int x)
 	while (aux->next)
 		aux = aux->next;
 	aux->next = box;
-	box = queue;
+	/*box = queue;
 	while (box)
 	{
-		ft_printf("inside function: copy[%d][%d]> %c\n" box->y, box->x, copy[box->y][box->x]);
+		ft_printf("inside function: y = %d, x = %d\n", box->y, box->x);
 		box = box->next;
 	}
+	ft_printf("\n");*/
 }
 
 void	deque (t_box **queue)

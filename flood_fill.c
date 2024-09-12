@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:52:05 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/11 16:45:20 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/09/12 12:05:16 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ void	flood_fill(char *map)
 	//t_box	*box;
 	while (queue)
 	{
-		if (copy[queue->y][queue->x] != 'P' && copy[queue->y][queue->x] != 1)
+		if (copy[queue->y][queue->x] != 'P' && copy[queue->y][queue->x] != '1')
 		{
+		//	ft_printf("copy[%d][%d]: %c\n", queue->y, queue->x, copy[queue->y][queue->x]);
 			if (copy[queue->y][queue->x] == 'C')
 				c[1]++;
 			if (copy[queue->y][queue->x] == 'E')
