@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:23:33 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/12 12:04:19 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/09/13 17:15:14 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_box	*create_box(t_box *queue, int y, int x)
 	t_box	*box;
 
 	box = ft_calloc(sizeof(t_box), 1);
-	if (!box) {
+	if (!box)
+	{
 		if (queue)
 			clean_queue(queue);
 		exit(22);
@@ -40,16 +41,9 @@ void	enque(t_box *queue, int y, int x)
 	while (aux->next)
 		aux = aux->next;
 	aux->next = box;
-	/*box = queue;
-	while (box)
-	{
-		ft_printf("inside function: y = %d, x = %d\n", box->y, box->x);
-		box = box->next;
-	}
-	ft_printf("\n");*/
 }
 
-void	deque (t_box **queue)
+void	deque(t_box **queue)
 {
 	t_box	*aux;
 
