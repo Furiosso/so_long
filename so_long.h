@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 19:06:52 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/11 13:00:49 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:14:34 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <stddef.h>
 # include "Libft/libft.h"
+# include "MLX42/include/MLX42/MLX42.h"
 
 typedef struct s_box
 {
@@ -25,6 +26,9 @@ typedef struct s_box
 	int				x;
 	struct s_box	*next;
 }		t_box;
+
+//# define WIDTH = 512;
+//# define HEIGHT = 512;
 
 char	*check_first_line(int fd);
 void	clean_copy(char **copy);
@@ -34,5 +38,6 @@ void	deque(t_box **queue);
 void	enque(t_box *queue, int y, int x);
 void	flood_fill(char *map);
 void	finish(char *s, int err_key);
+int32_t	play_game(char *file);
 
 #endif

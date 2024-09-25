@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:52:05 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/13 17:13:54 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/09/25 12:34:50 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	flood_fill(char *map)
 	queue = create_box(NULL, origin[0], origin[1]);
 	free(origin);
 	bfs(copy, queue, c);
+	//return (copy);
 	clean_copy(copy);
 }
 

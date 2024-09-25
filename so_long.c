@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/09 12:30:07 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:26:38 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char **argv)
 	check_arg(argc, argv);
 	check_map(argv[1]);
 	flood_fill(argv[1]);
+	play_game(argv[1]);
 }
 
 void	check_arg(int argc, char **argv)

@@ -1,23 +1,30 @@
 NAME = so_long
 CC = cc
-CFILES = so_long.c utils.c flood_fill.c copy_map.c manage_queue.c
+CFILES = so_long.c utils.c flood_fill.c copy_map.c manage_queue.c play_game.c
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address,leak -g3
+LFLAGS = -ldl -lglfw -pthread -lm
 
 OFILES = $(CFILES:.c=.o)
 
 LIBFT_DIR = Libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
+MLX_DIR = MLX42/build
+MLX = $(MLX_DIR)/libmlx42.a
+
 all: $(NAME)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME):$(OFILES) $(LIBFT)
-	@$(CC) $(CFLAGS) -I $(LIBFT_DIR) $(OFILES) $(LIBFT) -o $(NAME)
+$(MLX):
+	@$(MAKE) -C $(MLX_DIR)
+
+$(NAME):$(OFILES) $(LIBFT) $(MLX)
+	@$(CC) $(CFLAGS) -I $(LIBFT_DIR) -I $(MLX_DIR) $(OFILES) $(LIBFT) $(MLX) $(LFLAGS) -o $(NAME)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -I $(LIBFT_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(LIBFT_DIR) -I $(MLX_DIR) -c $< -o $@
 
 clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
