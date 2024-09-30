@@ -1,6 +1,6 @@
 NAME = so_long
 CC = cc
-CFILES = so_long.c utils.c flood_fill.c copy_map.c manage_queue.c play_game.c
+CFILES = so_long.c utils.c flood_fill.c copy_map.c manage_queue.c play_game.c clean_window.c draw_image.c
 CFLAGS = -Wall -Wextra -Werror -fsanitize=address,leak -g3
 LFLAGS = -ldl -lglfw -pthread -lm
 

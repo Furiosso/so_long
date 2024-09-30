@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/25 13:26:38 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:51:20 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@ void	check_p_and_e(char c);
 
 int	main(int argc, char **argv)
 {
+	t_map	*map;
+
 	check_arg(argc, argv);
 	check_map(argv[1]);
-	flood_fill(argv[1]);
-	play_game(argv[1]);
+	map = ft_calloc(1, sizeof(t_map));
+	if (!map)
+		finish("malloc", 70);
+	flood_fill(argv[1], map);
+	play_game(map);
 }
 
 void	check_arg(int argc, char **argv)

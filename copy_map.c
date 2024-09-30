@@ -6,37 +6,36 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:48:02 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/10 12:55:24 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:08:47 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 size_t	get_height(char *map);
-char	*record_boxes_info(char **copy, char *line, size_t len);
+char	*record_boxes_info(char *line, size_t len);
 void	clean_copy(char **copy);
 
-char	**copy_map(char *map)
+char	**copy_map(char *source, t_map *map)
 {
 	char	**copy;
-	size_t	len[2];
 	int		fd;
 	char	*line;
 	size_t	con;
 
-	len[0] = get_height(map);
-	copy = ft_calloc(sizeof(char *), len[0]);
+	copy = ft_calloc(sizeof(char *), (*map).height);
 	if (!copy)
-		exit(15);
-	fd = open(map, O_RDONLY);
+		finish("malloc", 15);
+	fd = open(source, O_RDONLY);
 	if (fd < 0)
 		finish("open", 16);
 	line = get_next_line(fd);
-	len[1] = ft_strlen(line) - 1;
+	(*map).wide = ft_strlen(line) - 1;
 	con = -1;
 	while (line)
 	{
-		copy[++con] = record_boxes_info(copy, line, len[1]);
+		copy[++con] = record_boxes_info(line, (*map).wide);
+		(*map).map[con] = ft_strdup(copy[con]);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -67,17 +66,14 @@ size_t	get_height(char *map)
 	return (height);
 }
 
-char	*record_boxes_info(char **copy, char *line, size_t len)
+char	*record_boxes_info(char *line, size_t len)
 {
 	size_t	i;
 	char	*row;
 
 	row = ft_calloc(sizeof(char), len + 1);
 	if (!row)
-	{
-		clean_copy(copy);
-		exit(18);
-	}
+		finish("malloc", 18);
 	i = 0;
 	while (i < len)
 	{

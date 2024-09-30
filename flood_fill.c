@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:52:05 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/25 12:34:50 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:10:05 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,40 @@
 
 size_t	check_c(char *map);
 size_t	count_cs(char *line);
-int		*find_p(char **map);
+void	find_p(char **copy, size_t **origin, t_map *map);
 void	bfs(char **copy, t_box *queue, size_t c);
 
-void	flood_fill(char *map)
+void	flood_fill(char *source, t_map *map)
 {
-	size_t	c;
 	char	**copy;
-	int		*origin;
+	size_t	*origin;
 	t_box	*queue;
 
-	c = check_c(map);
-	copy = copy_map(map);
-	origin = find_p(copy);
+	(*map).collectables = check_c(source);
+	(*map).height = get_height(source);
+	(*map).map = ft_calloc(sizeof(char *), (*map).height);
+	origin = ft_calloc(sizeof(size_t), 2);
+	(*map).player = ft_calloc(sizeof(size_t), 2);
+	(*map).exit = ft_calloc(sizeof(size_t), 2);
+	if (!origin || !(*map).map || !(*map).player || !(*map).exit)
+		finish("malloc", 23);
+	copy = copy_map(source, map);
+	find_p(copy, &origin, map);
 	copy[origin[0]][origin[1]] = '0';
 	queue = create_box(NULL, origin[0], origin[1]);
 	free(origin);
-	bfs(copy, queue, c);
-	//return (copy);
+	bfs(copy, queue, (*map).collectables);
 	clean_copy(copy);
+	find_e(map);
 }
 
-size_t	check_c(char *map)
+size_t	check_c(char *source)
 {
 	int		fd;
 	size_t	c;
 	char	*line;
 
-	fd = open(map, O_RDWR);
+	fd = open(source, O_RDWR);
 	if (fd < 0)
 		finish("open", 11);
 	c = 0;
@@ -73,33 +79,30 @@ size_t	count_cs(char *line)
 	return (c);
 }
 
-int	*find_p(char **map)
+void	find_p(char **copy, size_t **origin, t_map *map)
 {
-	int		*origin;
 	char	flag;
 
 	flag = 0;
-	origin = ft_calloc(sizeof(int), 2);
-	if (!origin)
-		exit(23);
-	origin[0] = 1;
-	while (map[origin[0]])
+	(*origin)[0] = 1;
+	while (copy[(*origin)[0]])
 	{
-		origin[1] = 1;
-		while (map[origin[0]][origin[1]])
+		(*origin)[1] = 1;
+		while (copy[(*origin)[0]][(*origin)[1]])
 		{
-			if (map[origin[0]][origin[1]] == 'P')
+			if (copy[(*origin)[0]][(*origin)[1]] == 'P')
 			{
 				flag = 1;
+				(*map).player[0] = (*origin)[0];
+				(*map).player[1] = (*origin)[1];
 				break ;
 			}
-			origin[1]++;
+			(*origin)[1]++;
 		}
 		if (flag)
 			break ;
-		origin[0]++;
+		(*origin)[0]++;
 	}
-	return (origin);
 }
 
 void	bfs(char **copy, t_box *queue, size_t c)
