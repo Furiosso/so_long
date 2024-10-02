@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:06:37 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/02 18:23:18 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/02 19:27:22 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	ft_hook(mlx_key_data_t keydata, void *param)
 		&& (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT)
 		&& (*map).map[(*map).player[0]][(*map).player[1] + 1] != '1')
 		move_right(map);
-	ft_printf("StEpS: %u\n", (*map).steps);
 	if (((*map).player[0] == (*map).exit[0])
 		&& ((*map).player[1] == (*map).exit[1]) && (*map).cs_are_found)
 		mlx_close_window((*map).window);

@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:46:35 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/02 16:40:12 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/02 19:28:30 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	move_up(t_map *map)
 	if (!(*map).cs_are_found)
 		check_collectables(map);
 	(*map).steps++;
+	ft_printf("STePs: %u\n", (*map).steps);
 }
 
 void	move_down(t_map *map)
@@ -30,6 +31,7 @@ void	move_down(t_map *map)
 	if (!(*map).cs_are_found)
 		check_collectables(map);
 	(*map).steps++;
+	ft_printf("STePs: %u\n", (*map).steps);
 }
 
 void	move_left(t_map *map)
@@ -39,6 +41,7 @@ void	move_left(t_map *map)
 	if (!(*map).cs_are_found)
 		check_collectables(map);
 	(*map).steps++;
+	ft_printf("STePs: %u\n", (*map).steps);
 }
 
 void	move_right(t_map *map)
@@ -48,6 +51,7 @@ void	move_right(t_map *map)
 	if (!(*map).cs_are_found)
 		check_collectables(map);
 	(*map).steps++;
+	ft_printf("STePs: %u\n", (*map).steps);
 }
 
 void	check_collectables(t_map *map)
