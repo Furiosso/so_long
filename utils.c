@@ -6,11 +6,23 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:51:18 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/30 19:00:30 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:44:48 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	finish(char *s, int err_key)
+{
+	perror(s);
+	exit(err_key);
+}
+
+void	end(char *s, int err_key)
+{
+	ft_printf("Error\n%s\n", s);
+	exit(err_key);
+}
 
 char	*check_first_line(int fd)
 {
@@ -18,14 +30,8 @@ char	*check_first_line(int fd)
 
 	line = get_next_line(fd);
 	if (!line)
-		exit (14);
+		end ("void file", 40);
 	return (line);
-}
-
-void	finish(char *s, int err_key)
-{
-	perror(s);
-	exit(err_key);
 }
 
 void	find_e(t_map *map)

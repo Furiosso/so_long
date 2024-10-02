@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:52:05 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/30 19:10:05 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/02 18:18:55 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 size_t	check_c(char *map);
 size_t	count_cs(char *line);
-void	find_p(char **copy, size_t **origin, t_map *map);
+void	find_p(char **copy, int32_t **origin, t_map *map);
 void	bfs(char **copy, t_box *queue, size_t c);
 
 void	flood_fill(char *source, t_map *map)
 {
 	char	**copy;
-	size_t	*origin;
+	int32_t	*origin;
 	t_box	*queue;
 
 	(*map).collectables = check_c(source);
 	(*map).height = get_height(source);
 	(*map).map = ft_calloc(sizeof(char *), (*map).height);
-	origin = ft_calloc(sizeof(size_t), 2);
-	(*map).player = ft_calloc(sizeof(size_t), 2);
-	(*map).exit = ft_calloc(sizeof(size_t), 2);
+	origin = ft_calloc(sizeof(int32_t), 2);
+	(*map).player = ft_calloc(sizeof(int32_t), 2);
+	(*map).exit = ft_calloc(sizeof(int32_t), 2);
 	if (!origin || !(*map).map || !(*map).player || !(*map).exit)
-		finish("malloc", 23);
+		finish("malloc", 20);
 	copy = copy_map(source, map);
 	find_p(copy, &origin, map);
 	copy[origin[0]][origin[1]] = '0';
@@ -49,7 +49,7 @@ size_t	check_c(char *source)
 
 	fd = open(source, O_RDWR);
 	if (fd < 0)
-		finish("open", 11);
+		finish("open", 21);
 	c = 0;
 	line = check_first_line(fd);
 	while (line)
@@ -59,9 +59,9 @@ size_t	check_c(char *source)
 		line = get_next_line(fd);
 	}
 	if (close(fd) < 0)
-		finish("close", 12);
+		finish("close", 22);
 	if (!c)
-		exit(13);
+		end("Collectables not found", 23);
 	return (c);
 }
 
@@ -79,7 +79,7 @@ size_t	count_cs(char *line)
 	return (c);
 }
 
-void	find_p(char **copy, size_t **origin, t_map *map)
+void	find_p(char **copy, int32_t **origin, t_map *map)
 {
 	char	flag;
 
@@ -129,5 +129,5 @@ void	bfs(char **copy, t_box *queue, size_t c)
 		deque(&queue);
 	}
 	if (!e || c != c_count)
-		exit(21);
+		end("Irresolvable map", 24);
 }

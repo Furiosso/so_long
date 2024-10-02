@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/30 19:51:20 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/02 17:57:57 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	main(int argc, char **argv)
 void	check_arg(int argc, char **argv)
 {
 	if (argc != 2)
-		exit(1);
+		end("Not enough or too many arguments", 1);
 	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
-		exit(2);
+		end("Not a .ber document", 2);
 }
 
 void	check_map(char *map)
@@ -60,7 +60,7 @@ void	check_map(char *map)
 		if (line && line[len[0]] == '\n')
 			line[len[0]] = '\0';
 		if ((!wall && len[1] == 1) || (!wall && !line))
-			exit(4);
+			end("The map provided is not properly enclosed by walls", 4);
 		len[1]++;
 	}
 	if (close(fd) < 0)
@@ -73,11 +73,11 @@ char	check_walls(char *line, size_t len)
 	char	wall;
 
 	if (line && ft_strlen(line) != len)
-		exit(6);
+		end("The map provided is not rectangular", 6);
 	if (*line != '1')
-		exit(7);
+		end("The map provided is not properly enclosed by walls", 7);
 	if (*(line + len - 1) != '1')
-		exit(8);
+		end("The map provided is not properly enclosed by walls", 8);
 	wall = 1;
 	allowed = "01CEP";
 	while (*line)
@@ -85,7 +85,7 @@ char	check_walls(char *line, size_t len)
 		if (*line != '1')
 			wall = 0;
 		if (!ft_strchr(allowed, *line))
-			exit(9);
+			end("Forbidden characters found in map", 9);
 		check_p_and_e(*line);
 		line++;
 	}
@@ -102,5 +102,5 @@ void	check_p_and_e(char c)
 	if (c == 'P')
 		p++;
 	if (e > 1 || p > 1)
-		exit(10);
+		end("Too many players or too many exits found", 10);
 }
