@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:06:37 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/02 19:27:22 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/02 19:55:18 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	charge_textures(t_texture *texture)
 	texture->player = mlx_load_png("./temp/player.png");
 	if (!texture->player)
 		finish("texture", 28);
-	texture->collectable = mlx_load_png("./temp/caca.png");
+	texture->collectable = mlx_load_png("./temp/collectable.png");
 	if (!texture->collectable)
 		finish("texture", 29);
 	texture->exit = mlx_load_png("./temp/exit.png");
