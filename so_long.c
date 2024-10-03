@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/02 17:57:57 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/03 12:55:54 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	check_arg(int argc, char **argv)
 		end("Not enough or too many arguments", 1);
 	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
 		end("Not a .ber document", 2);
+	if (!ft_strncmp(".ber", argv[1], 4))
+		end("Nameless document", 41);
 }
 
 void	check_map(char *map)
@@ -57,10 +59,7 @@ void	check_map(char *map)
 		wall = check_walls(line, len[0]);
 		free(line);
 		line = get_next_line(fd);
-		if (line && line[len[0]] == '\n')
-			line[len[0]] = '\0';
-		if ((!wall && len[1] == 1) || (!wall && !line))
-			end("The map provided is not properly enclosed by walls", 4);
+		check_len(line, len, wall);
 		len[1]++;
 	}
 	if (close(fd) < 0)
@@ -72,10 +71,12 @@ char	check_walls(char *line, size_t len)
 	char	*allowed;
 	char	wall;
 
-	if (line && ft_strlen(line) != len)
-		end("The map provided is not rectangular", 6);
 	if (*line != '1')
-		end("The map provided is not properly enclosed by walls", 7);
+	{
+		if (*line == '0')
+			end("The map provided is not properly enclosed by walls", 7);
+		end("Forbidden characters found in map", 42);
+	}
 	if (*(line + len - 1) != '1')
 		end("The map provided is not properly enclosed by walls", 8);
 	wall = 1;

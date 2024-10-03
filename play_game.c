@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:06:37 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/02 19:55:18 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/03 13:14:58 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,8 @@ void	ft_hook(mlx_key_data_t keydata, void *param)
 		move_right(map);
 	if (((*map).player[0] == (*map).exit[0])
 		&& ((*map).player[1] == (*map).exit[1]) && (*map).cs_are_found)
+	{
 		mlx_close_window((*map).window);
+		ft_printf("Game beaten in %u movements. Kudos!!!\n", (*map).steps);
+	}
 }

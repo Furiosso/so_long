@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 19:06:52 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/02 18:27:21 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:59:56 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_texture
 	mlx_texture_t	*exit;
 }		t_texture;
 
+void	check_len(char *line, size_t *len, char wall);
 char	*check_first_line(int fd);
 void	clean_copy(char **copy);
 void	clean_window(t_map *map, t_image *img, t_texture *texture, mlx_t *mlx);
