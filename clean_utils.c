@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_window.c                                     :+:      :+:    :+:   */
+/*   clean_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
+/*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:19:24 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/02 16:25:22 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:02:24 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,47 @@ void	clean_window(t_map *map, t_image *img, t_texture *texture, mlx_t *mlx)
 	mlx_delete_texture(texture->exit);
 	free(texture);
 	free(img);
-	clean_copy((*map).map);
-	free((*map).player);
-	free((*map).exit);
+	clean_copy(map->map);
+	free(map->player);
+	free(map->exit);
 	free(map);
 	mlx_terminate(mlx);
+}
+
+void	free_line_and_exit(char *line, int fd, char *s)
+{
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	if (close(fd) < 0)
+		finish("close", 5);
+	end(s, 10);
+}
+
+void	free_map_and_exit(t_map *map, char *s, char **copy)
+{
+	if (copy)
+		clean_copy(copy);
+	if (map->map)
+		clean_copy(map->map);
+	if (map->player)
+		free(map->player);
+	if (map->exit)
+		free(map->exit);
+	free(map);
+	end(s, 11);
+}
+
+void	free_map_and_finish(t_map *map, char *s)
+{
+	if (map->map)
+		free(map->map);
+	if (map->player)
+		free(map->player);
+	if (map->exit)
+		free(map->exit);
+	free(map);
+	finish(s, 12);
 }

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
+/*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:52:05 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/02 18:18:55 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:47:00 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-size_t	check_c(char *map);
+size_t	check_c(char *source, t_map *map);
 size_t	count_cs(char *line);
 void	find_p(char **copy, int32_t **origin, t_map *map);
-void	bfs(char **copy, t_box *queue, size_t c);
+void	bfs(char **copy, t_box *queue, size_t c, t_map *map);
 
 void	flood_fill(char *source, t_map *map)
 {
@@ -23,25 +23,25 @@ void	flood_fill(char *source, t_map *map)
 	int32_t	*origin;
 	t_box	*queue;
 
-	(*map).collectables = check_c(source);
-	(*map).height = get_height(source);
-	(*map).map = ft_calloc(sizeof(char *), (*map).height);
+	map->collectables = check_c(source, map);
+	map->height = get_height(source);
+	map->map = ft_calloc(sizeof(char *), map->height);
 	origin = ft_calloc(sizeof(int32_t), 2);
-	(*map).player = ft_calloc(sizeof(int32_t), 2);
-	(*map).exit = ft_calloc(sizeof(int32_t), 2);
-	if (!origin || !(*map).map || !(*map).player || !(*map).exit)
-		finish("malloc", 20);
+	map->player = ft_calloc(sizeof(int32_t), 2);
+	map->exit = ft_calloc(sizeof(int32_t), 2);
+	if (!origin || !map->map || !map->player || !map->exit)
+		free_map_and_finish(map, "malloc");
 	copy = copy_map(source, map);
 	find_p(copy, &origin, map);
 	copy[origin[0]][origin[1]] = '0';
 	queue = create_box(NULL, origin[0], origin[1]);
 	free(origin);
-	bfs(copy, queue, (*map).collectables);
+	bfs(copy, queue, map->collectables, map);
 	clean_copy(copy);
 	find_e(map);
 }
 
-size_t	check_c(char *source)
+size_t	check_c(char *source, t_map *map)
 {
 	int		fd;
 	size_t	c;
@@ -49,7 +49,7 @@ size_t	check_c(char *source)
 
 	fd = open(source, O_RDWR);
 	if (fd < 0)
-		finish("open", 21);
+		free_map_and_finish(map, "open");
 	c = 0;
 	line = check_first_line(fd);
 	while (line)
@@ -59,9 +59,9 @@ size_t	check_c(char *source)
 		line = get_next_line(fd);
 	}
 	if (close(fd) < 0)
-		finish("close", 22);
+		free_map_and_finish(map, "close");
 	if (!c)
-		end("Collectables not found", 23);
+		free_map_and_exit(map, "Collectables not found", NULL);
 	return (c);
 }
 
@@ -93,8 +93,8 @@ void	find_p(char **copy, int32_t **origin, t_map *map)
 			if (copy[(*origin)[0]][(*origin)[1]] == 'P')
 			{
 				flag = 1;
-				(*map).player[0] = (*origin)[0];
-				(*map).player[1] = (*origin)[1];
+				map->player[0] = (*origin)[0];
+				map->player[1] = (*origin)[1];
 				break ;
 			}
 			(*origin)[1]++;
@@ -105,7 +105,7 @@ void	find_p(char **copy, int32_t **origin, t_map *map)
 	}
 }
 
-void	bfs(char **copy, t_box *queue, size_t c)
+void	bfs(char **copy, t_box *queue, size_t c, t_map *map)
 {
 	int		e;
 	size_t	c_count;
@@ -129,5 +129,5 @@ void	bfs(char **copy, t_box *queue, size_t c)
 		deque(&queue);
 	}
 	if (!e || c != c_count)
-		end("Irresolvable map", 24);
+		free_map_and_exit(map, "Irresolvable map", copy);
 }

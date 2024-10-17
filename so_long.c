@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
+/*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/03 12:55:54 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:02:30 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	check_arg(int argc, char **argv);
-void	check_map(char *map);
-char	check_walls(char *line, size_t len);
-void	check_p_and_e(char c);
+static void	check_arg(int argc, char **argv);
+static void	check_map(char *map);
+static char	check_walls(char *line, size_t len, int fd);
+static void	check_p_and_e(char c, char *line, int fd);
 
 int	main(int argc, char **argv)
 {
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 	play_game(map);
 }
 
-void	check_arg(int argc, char **argv)
+static void	check_arg(int argc, char **argv)
 {
 	if (argc != 2)
 		end("Not enough or too many arguments", 1);
@@ -40,7 +40,7 @@ void	check_arg(int argc, char **argv)
 		end("Nameless document", 41);
 }
 
-void	check_map(char *map)
+static void	check_map(char *map)
 {
 	int		fd;
 	size_t	len[2];
@@ -56,44 +56,42 @@ void	check_map(char *map)
 	line[len[0]] = '\0';
 	while (line)
 	{
-		wall = check_walls(line, len[0]);
+		wall = check_walls(line, len[0], fd);
 		free(line);
 		line = get_next_line(fd);
-		check_len(line, len, wall);
+		check_len(line, len, wall, fd);
 		len[1]++;
 	}
 	if (close(fd) < 0)
 		finish("close", 5);
 }
 
-char	check_walls(char *line, size_t len)
+static char	check_walls(char *line, size_t len, int fd)
 {
-	char	*allowed;
 	char	wall;
+	char	*aux;
 
-	if (*line != '1')
+	if (*line != '1' || *(line + len - 1) != '1')
 	{
-		if (*line == '0')
-			end("The map provided is not properly enclosed by walls", 7);
-		end("Forbidden characters found in map", 42);
+		if (*line == '0' || *(line + len - 1) == '0')
+			free_line_and_exit(line, fd, "Map not properly enclosed by walls");
+		free_line_and_exit(line, fd, "Forbidden characters found in map");
 	}
-	if (*(line + len - 1) != '1')
-		end("The map provided is not properly enclosed by walls", 8);
+	aux = line;
 	wall = 1;
-	allowed = "01CEP";
-	while (*line)
+	while (*aux)
 	{
-		if (*line != '1')
+		if (*aux != '1')
 			wall = 0;
-		if (!ft_strchr(allowed, *line))
-			end("Forbidden characters found in map", 9);
-		check_p_and_e(*line);
-		line++;
+		if (!ft_strchr("01CEP", *aux))
+			free_line_and_exit(line, fd, "Forbidden characters found in map");
+		check_p_and_e(*aux, line, fd);
+		aux++;
 	}
 	return (wall);
 }
 
-void	check_p_and_e(char c)
+void	check_p_and_e(char c, char *line, int fd)
 {
 	static int	e = 0;
 	static int	p = 0;
@@ -103,5 +101,6 @@ void	check_p_and_e(char c)
 	if (c == 'P')
 		p++;
 	if (e > 1 || p > 1)
-		end("Too many players or too many exits found", 10);
+		free_line_and_exit(line, fd,
+			"Too many players or too many exits found");
 }

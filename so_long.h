@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
+/*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 19:06:52 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/03 11:59:56 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:47:10 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_texture
 	mlx_texture_t	*exit;
 }		t_texture;
 
-void	check_len(char *line, size_t *len, char wall);
+void	check_len(char *line, size_t *len, char wall, int fd);
 char	*check_first_line(int fd);
 void	clean_copy(char **copy);
 void	clean_window(t_map *map, t_image *img, t_texture *texture, mlx_t *mlx);
@@ -72,6 +72,9 @@ void	enque(t_box *queue, int y, int x);
 void	flood_fill(char *source, t_map *map);
 void	find_e(t_map *map);
 void	finish(char *s, int err_key);
+void	free_line_and_exit(char *line, int fd, char *s);
+void	free_map_and_exit(t_map *map, char *s, char **copy);
+void	free_map_and_finish(t_map *map, char *s);
 void	move_up(t_map *map);
 void	move_down(t_map *map);
 void	move_left(t_map *map);
