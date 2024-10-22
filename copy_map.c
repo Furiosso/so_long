@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:48:02 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/15 15:55:58 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:47:50 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,14 @@ void	clean_copy(char **copy)
 		i++;
 	}
 	free(copy);
+}
+
+void	check_size(int32_t size1, int32_t size2, char *line, int fd)
+{
+	if (size1 > size2)
+	{
+		if (line)
+			free_line_and_exit(line, fd, "Map provided bigger than monitor");
+		end("Map provided bigger than monitor", 99);
+	}
 }

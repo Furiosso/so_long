@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/15 14:02:30 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:45:16 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	check_arg(int argc, char **argv);
 static void	check_map(char *map);
-static char	check_walls(char *line, size_t len, int fd);
+static char	check_walls(char *line, int32_t len, int fd);
 static void	check_p_and_e(char c, char *line, int fd);
 
 int	main(int argc, char **argv)
@@ -43,7 +43,7 @@ static void	check_arg(int argc, char **argv)
 static void	check_map(char *map)
 {
 	int		fd;
-	size_t	len[2];
+	int32_t	len[4];
 	char	wall;
 	char	*line;
 
@@ -51,7 +51,9 @@ static void	check_map(char *map)
 	if (fd < 0)
 		finish("open", 3);
 	line = check_first_line(fd);
+	get_width_and_height(&len[2], &len[3]);
 	len[0] = ft_strlen(line) - 1;
+	check_size(len[0] * 64, len[2], line, fd);
 	len[1] = 1;
 	line[len[0]] = '\0';
 	while (line)
@@ -62,11 +64,12 @@ static void	check_map(char *map)
 		check_len(line, len, wall, fd);
 		len[1]++;
 	}
+	check_size((len[1] - 1) * 64, len[3], NULL, 0);
 	if (close(fd) < 0)
 		finish("close", 5);
 }
 
-static char	check_walls(char *line, size_t len, int fd)
+static char	check_walls(char *line, int32_t len, int fd)
 {
 	char	wall;
 	char	*aux;

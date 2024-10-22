@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:51:18 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/15 16:14:59 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:31:04 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ char	*check_first_line(int fd)
 	return (line);
 }
 
-void	check_len(char *line, size_t *len, char wall, int fd)
+void	check_len(char *line, int32_t *len, char wall, int fd)
 {
 	if (line && (((line[ft_strlen(line) - 1] == '\n')
-				&& ft_strlen(line) != len[0] + 1)
+				&& ft_strlen(line) != (size_t)len[0] + 1)
 			|| (line[ft_strlen(line) - 1] != '\n'
-				&& ft_strlen(line) != len[0])))
+				&& ft_strlen(line) != (size_t)len[0])))
 		free_line_and_exit(line, fd, "The map provided is not rectangular");
 	if (line && line[len[0]] == '\n')
 		line[len[0]] = '\0';

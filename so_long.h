@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 19:06:52 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/17 16:47:10 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/22 13:45:28 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct s_map
 {
 	mlx_t			*window;
 	char			**map;
-	size_t			height;
-	size_t			wide;
+	int32_t			height;
+	int32_t			wide;
 	int32_t			*player;
 	int32_t			*exit;
 	size_t			collectables;
@@ -58,8 +58,9 @@ typedef struct s_texture
 	mlx_texture_t	*exit;
 }		t_texture;
 
-void	check_len(char *line, size_t *len, char wall, int fd);
+void	check_len(char *line, int32_t *len, char wall, int fd);
 char	*check_first_line(int fd);
+void	check_size(int32_t size1, int32_t size2, char *line, int fd);
 void	clean_copy(char **copy);
 void	clean_window(t_map *map, t_image *img, t_texture *texture, mlx_t *mlx);
 t_box	*create_box(t_box *queue, int y, int x);
@@ -75,6 +76,7 @@ void	finish(char *s, int err_key);
 void	free_line_and_exit(char *line, int fd, char *s);
 void	free_map_and_exit(t_map *map, char *s, char **copy);
 void	free_map_and_finish(t_map *map, char *s);
+void	get_width_and_height(int32_t *width, int32_t *height);
 void	move_up(t_map *map);
 void	move_down(t_map *map);
 void	move_left(t_map *map);
