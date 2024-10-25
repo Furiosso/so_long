@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:33:42 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/25 13:35:46 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/25 15:27:03 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,24 @@ static void	set_items_in_window(char **map, mlx_t *mlx, t_image *img, int *con)
 		if (mlx_image_to_window(mlx, temp, con[1] * 64, con[0] * 64) < 0)
 			finish("image_to_window", 29);
 	}
+}
+
+void	check_name(char *name)
+{
+	char	*needle;
+	char	*ber;
+
+	needle = ft_strrchr(name, '/');
+	if (!needle)
+		return ;
+	ber = ".ber";
+	needle++;
+	while (*needle && *ber)
+	{
+		if (*needle != *ber)
+			return ;
+		needle++;
+		ber++;
+	}
+	end ("Nameless document", 31);
 }

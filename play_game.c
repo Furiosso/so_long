@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:06:37 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/25 13:34:44 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/25 14:22:03 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,19 @@ int32_t	play_game(t_map *map)
 
 static void	charge_textures(t_texture *texture)
 {
-	texture->background = mlx_load_png("./temp/background.png");
+	texture->background = mlx_load_png("./textures/background.png");
 	if (!texture->background)
 		finish("texture", 17);
-	texture->wall = mlx_load_png("./temp/muro.png");
+	texture->wall = mlx_load_png("./textures/muro.png");
 	if (!texture->wall)
 		finish("texture", 18);
-	texture->player = mlx_load_png("./temp/player.png");
+	texture->player = mlx_load_png("./textures/player.png");
 	if (!texture->player)
 		finish("texture", 19);
-	texture->collectable = mlx_load_png("./temp/collectable.png");
+	texture->collectable = mlx_load_png("./textures/collectable.png");
 	if (!texture->collectable)
 		finish("texture", 20);
-	texture->exit = mlx_load_png("./temp/exit.png");
+	texture->exit = mlx_load_png("./textures/exit.png");
 	if (!texture->exit)
 		finish("texture", 21);
 }

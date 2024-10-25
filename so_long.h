@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 19:06:52 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/25 13:04:50 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/25 15:05:45 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_texture
 
 void	check_len(char *line, int32_t *len, char wall, int fd);
 char	*check_first_line(int fd);
+void	check_name(char *name);
 void	check_size(int32_t size1, int32_t size2, char *line, int fd);
 void	clean_copy(char **copy);
 void	clean_window(t_map *map, t_image *img, t_texture *texture, mlx_t *mlx);

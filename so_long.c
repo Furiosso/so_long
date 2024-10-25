@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/25 13:27:54 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/25 15:04:19 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	check_arg(int argc, char **argv)
 		end("Not a .ber document", 2);
 	if (!ft_strncmp(".ber", argv[1], 4))
 		end("Nameless document", 3);
+	check_name(argv[1]);
 }
 
 static void	check_map(char *map)
