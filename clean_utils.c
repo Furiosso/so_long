@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:19:24 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/22 13:57:18 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:26:12 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_line_and_exit(char *line, int fd, char *s)
 	}
 	if (close(fd) < 0)
 		finish("close", 5);
-	end(s, 10);
+	end(s, 7);
 }
 
 void	free_map_and_exit(t_map *map, char *s, char **copy)
@@ -56,7 +56,7 @@ void	free_map_and_exit(t_map *map, char *s, char **copy)
 	if (map->exit)
 		free(map->exit);
 	free(map);
-	end(s, 11);
+	end(s, 9);
 }
 
 void	free_map_and_finish(t_map *map, char *s)
@@ -68,14 +68,14 @@ void	free_map_and_finish(t_map *map, char *s)
 	if (map->exit)
 		free(map->exit);
 	free(map);
-	finish(s, 12);
+	finish(s, 10);
 }
 
 void	get_width_and_height(int32_t *width, int32_t *height)
 {
 	mlx_t	*mlx;
 
-	mlx = mlx_init(1, 1, "temporal", false);
+	mlx = mlx_init(1, 1, "", false);
 	if (!mlx)
 	{
 		ft_printf("%s\n", (mlx_strerror(mlx_errno)));

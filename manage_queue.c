@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   manage_queue.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
+/*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:23:33 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/09/13 17:15:14 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:31:54 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	clean_queue(t_box *queue);
+static void	clean_queue(t_box *queue);
 
 t_box	*create_box(t_box *queue, int y, int x)
 {
@@ -23,7 +23,7 @@ t_box	*create_box(t_box *queue, int y, int x)
 	{
 		if (queue)
 			clean_queue(queue);
-		exit(22);
+		exit(15);
 	}
 	box->y = y;
 	box->x = x;
@@ -53,7 +53,7 @@ void	deque(t_box **queue)
 	free(aux);
 }
 
-void	clean_queue(t_box *queue)
+static void	clean_queue(t_box *queue)
 {
 	t_box	*aux;
 

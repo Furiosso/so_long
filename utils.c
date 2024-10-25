@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:51:18 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/22 13:31:04 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:23:01 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ char	*check_first_line(int fd)
 
 	line = get_next_line(fd);
 	if (!line)
-		end ("void file", 40);
+	{
+		if (close(fd) < 0)
+			finish("close", 5);
+		end("void file", 6);
+	}
 	return (line);
 }
 

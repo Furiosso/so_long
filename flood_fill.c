@@ -6,16 +6,16 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:52:05 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/17 16:47:00 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/22 14:12:41 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-size_t	check_c(char *source, t_map *map);
-size_t	count_cs(char *line);
-void	find_p(char **copy, int32_t **origin, t_map *map);
-void	bfs(char **copy, t_box *queue, size_t c, t_map *map);
+static size_t	check_c(char *source, t_map *map);
+static size_t	count_cs(char *line);
+static void		find_p(char **copy, int32_t **origin, t_map *map);
+static void		bfs(char **copy, t_box *queue, size_t c, t_map *map);
 
 void	flood_fill(char *source, t_map *map)
 {
@@ -41,7 +41,7 @@ void	flood_fill(char *source, t_map *map)
 	find_e(map);
 }
 
-size_t	check_c(char *source, t_map *map)
+static size_t	check_c(char *source, t_map *map)
 {
 	int		fd;
 	size_t	c;
@@ -65,7 +65,7 @@ size_t	check_c(char *source, t_map *map)
 	return (c);
 }
 
-size_t	count_cs(char *line)
+static size_t	count_cs(char *line)
 {
 	size_t	c;
 
@@ -79,7 +79,7 @@ size_t	count_cs(char *line)
 	return (c);
 }
 
-void	find_p(char **copy, int32_t **origin, t_map *map)
+static void	find_p(char **copy, int32_t **origin, t_map *map)
 {
 	char	flag;
 
@@ -105,7 +105,7 @@ void	find_p(char **copy, int32_t **origin, t_map *map)
 	}
 }
 
-void	bfs(char **copy, t_box *queue, size_t c, t_map *map)
+static void	bfs(char **copy, t_box *queue, size_t c, t_map *map)
 {
 	int		e;
 	size_t	c_count;

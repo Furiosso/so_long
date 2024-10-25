@@ -1,7 +1,7 @@
 NAME = so_long
 CC = cc
 CFILES = so_long.c utils.c flood_fill.c copy_map.c manage_queue.c play_game.c clean_utils.c draw_image.c movements.c
-CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address,leak -g3
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address,leak
 LFLAGS = -ldl -lglfw -pthread -lm
 
 OFILES = $(CFILES:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/22 13:45:16 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:27:54 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	check_map(argv[1]);
 	map = ft_calloc(1, sizeof(t_map));
 	if (!map)
-		finish("malloc", 70);
+		finish("malloc", 12);
 	flood_fill(argv[1], map);
 	play_game(map);
 }
@@ -34,10 +34,10 @@ static void	check_arg(int argc, char **argv)
 {
 	if (argc != 2)
 		end("Not enough or too many arguments", 1);
-	if (!ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])))
+	if (!check_extention(argv[1], ".ber"))
 		end("Not a .ber document", 2);
 	if (!ft_strncmp(".ber", argv[1], 4))
-		end("Nameless document", 41);
+		end("Nameless document", 3);
 }
 
 static void	check_map(char *map)
@@ -49,7 +49,7 @@ static void	check_map(char *map)
 
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
-		finish("open", 3);
+		finish("open", 4);
 	line = check_first_line(fd);
 	get_width_and_height(&len[2], &len[3]);
 	len[0] = ft_strlen(line) - 1;
@@ -66,7 +66,7 @@ static void	check_map(char *map)
 	}
 	check_size((len[1] - 1) * 64, len[3], NULL, 0);
 	if (close(fd) < 0)
-		finish("close", 5);
+		finish("close", 11);
 }
 
 static char	check_walls(char *line, int32_t len, int fd)
@@ -94,7 +94,7 @@ static char	check_walls(char *line, int32_t len, int fd)
 	return (wall);
 }
 
-void	check_p_and_e(char c, char *line, int fd)
+static void	check_p_and_e(char c, char *line, int fd)
 {
 	static int	e = 0;
 	static int	p = 0;

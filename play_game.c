@@ -6,16 +6,16 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:06:37 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/22 13:46:36 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/25 13:34:44 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	charge_textures(t_texture *texture);
-void	charge_images(mlx_t *mlx, t_image *img, t_texture *texture);
-void	ft_hook(mlx_key_data_t keydata, void *param);
-void	ft_close_window(void *param);
+static void	charge_textures(t_texture *texture);
+static void	charge_images(mlx_t *mlx, t_image *img, t_texture *texture);
+static void	ft_hook(mlx_key_data_t keydata, void *param);
+static void	ft_close_window(void *param);
 
 int32_t	play_game(t_map *map)
 {
@@ -32,7 +32,7 @@ int32_t	play_game(t_map *map)
 	texture = ft_calloc(sizeof(t_texture), 1);
 	map->img = ft_calloc(sizeof(t_image), 1);
 	if (!texture || !map->img)
-		finish("malloc", 25);
+		finish("malloc", 16);
 	charge_textures(texture);
 	charge_images(mlx, map->img, texture);
 	draw_image(map, mlx);
@@ -43,45 +43,45 @@ int32_t	play_game(t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-void	charge_textures(t_texture *texture)
+static void	charge_textures(t_texture *texture)
 {
 	texture->background = mlx_load_png("./temp/background.png");
 	if (!texture->background)
-		finish("texture", 26);
+		finish("texture", 17);
 	texture->wall = mlx_load_png("./temp/muro.png");
 	if (!texture->wall)
-		finish("texture", 27);
+		finish("texture", 18);
 	texture->player = mlx_load_png("./temp/player.png");
 	if (!texture->player)
-		finish("texture", 28);
+		finish("texture", 19);
 	texture->collectable = mlx_load_png("./temp/collectable.png");
 	if (!texture->collectable)
-		finish("texture", 29);
+		finish("texture", 20);
 	texture->exit = mlx_load_png("./temp/exit.png");
 	if (!texture->exit)
-		finish("texture", 30);
+		finish("texture", 21);
 }
 
-void	charge_images(mlx_t *mlx, t_image *img, t_texture *texture)
+static void	charge_images(mlx_t *mlx, t_image *img, t_texture *texture)
 {
 	img->background = mlx_texture_to_image(mlx, texture->background);
 	if (!img->background)
-		finish("image", 31);
+		finish("image", 22);
 	img->wall = mlx_texture_to_image(mlx, texture->wall);
 	if (!img->wall)
-		finish("image", 32);
+		finish("image", 23);
 	img->player = mlx_texture_to_image(mlx, texture->player);
 	if (!img->player)
-		finish("image", 33);
+		finish("image", 24);
 	img->collectable = mlx_texture_to_image(mlx, texture->collectable);
 	if (!img->collectable)
-		finish("image", 34);
+		finish("image", 25);
 	img->exit = mlx_texture_to_image(mlx, texture->exit);
 	if (!img->exit)
-		finish("image", 35);
+		finish("image", 26);
 }
 
-void	ft_close_window(void *param)
+static void	ft_close_window(void *param)
 {
 	mlx_t	*mlx;
 
@@ -90,7 +90,7 @@ void	ft_close_window(void *param)
 		mlx_close_window(mlx);
 }
 
-void	ft_hook(mlx_key_data_t keydata, void *param)
+static void	ft_hook(mlx_key_data_t keydata, void *param)
 {
 	t_map	*map;
 

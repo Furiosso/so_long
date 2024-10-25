@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   movements.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dagimeno <dagimeno@student.42madrid.c      +#+  +:+       +#+        */
+/*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:46:35 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/03 10:31:42 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/10/25 11:33:08 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	check_collectables(t_map *map);
+static void	check_collectables(t_map *map);
 
 void	move_up(t_map *map)
 {
@@ -54,7 +54,7 @@ void	move_right(t_map *map)
 	ft_printf("STePs: %u\n", (*map).steps);
 }
 
-void	check_collectables(t_map *map)
+static void	check_collectables(t_map *map)
 {
 	int32_t		y;
 	int32_t		x;
