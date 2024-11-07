@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:48:02 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/25 13:30:28 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/07 21:28:57 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ char	**copy_map(char *source, t_map *map)
 	char	*line;
 	size_t	con;
 
-	copy = ft_calloc(sizeof(char *), (*map).height);
+	copy = ft_calloc(sizeof(char *), map->height);
 	if (!copy)
-		finish("malloc", 14);
+		finish("malloc", 12);
 	fd = open(source, O_RDONLY);
 	if (fd < 0)
-		finish("open", 15);
+		finish("open", 13);
 	line = get_next_line(fd);
 	map->wide = ft_strlen(line) - 1;
 	con = -1;
@@ -40,7 +40,7 @@ char	**copy_map(char *source, t_map *map)
 		line = get_next_line(fd);
 	}
 	if (close(fd) < 0)
-		finish("close", 17);
+		finish("close", 14);
 	return (copy);
 }
 
@@ -54,7 +54,7 @@ size_t	get_height(char *map)
 	if (fd < 0)
 	{
 		free(map);
-		finish("open", 13);
+		finish("open", 15);
 	}
 	line = get_next_line(fd);
 	height = 1;
@@ -67,7 +67,7 @@ size_t	get_height(char *map)
 	if (close(fd) < 0)
 	{
 		free(map);
-		finish("close", 14);
+		finish("close", 16);
 	}
 	return (height);
 }
@@ -79,7 +79,7 @@ static char	*record_boxes_info(char *line, size_t len)
 
 	row = ft_calloc(sizeof(char), len + 1);
 	if (!row)
-		finish("malloc", 16);
+		finish("malloc", 17);
 	i = 0;
 	while (i < len)
 	{
@@ -101,14 +101,4 @@ void	clean_copy(char **copy)
 		i++;
 	}
 	free(copy);
-}
-
-void	check_size(int32_t size1, int32_t size2, char *line, int fd)
-{
-	if (size1 > size2)
-	{
-		if (line)
-			free_line_and_exit(line, fd, "Map provided bigger than monitor");
-		end("Map provided bigger than monitor", 8);
-	}
 }

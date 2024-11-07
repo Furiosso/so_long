@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 16:29:30 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/03 21:15:57 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:07:44 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,71 +14,37 @@
 
 static void	check_collectables(t_map *map);
 
-void	move_up(t_map *map)
+void	move_player(t_map *map, char move)
 {
-	map->img->player->instances[0].y -= 64;
-	map->player[0]--;
+	choose_direction(map, move);
 	if (!map->cs_are_found)
 		check_collectables(map);
 	map->steps++;
-	ft_printf("STePs: %u\n", map->steps);
-	charge_banner(map);
-}
-
-void	move_down(t_map *map)
-{
-	map->img->player->instances[0].y += 64;
-	map->player[0]++;
-	if (!map->cs_are_found)
-		check_collectables(map);
-	map->steps++;
-	ft_printf("STePs: %u\n", map->steps);
-	charge_banner(map);
-}
-
-void	move_left(t_map *map)
-{
-	map->img->player->instances[0].x -= 64;
-	map->player[1]--;
-	if (!map->cs_are_found)
-		check_collectables(map);
-	map->steps++;
-	ft_printf("STePs: %u\n", map->steps);
-	charge_banner(map);
-}
-
-void	move_right(t_map *map)
-{
-	map->img->player->instances[0].x += 64;
-	map->player[1]++;
-	if (!map->cs_are_found)
-		check_collectables(map);
-	map->steps++;
-	ft_printf("STePs: %u\n", map->steps);
-	charge_banner(map);
+	if (ft_printf("STePs: %u\n", map->steps) < 0)
+		clean_and_exit(map->texture, map);
+	charge_banner(map, map->texture);
 }
 
 static void	check_collectables(t_map *map)
 {
-	int32_t		y;
-	int32_t		x;
+	int32_t		coor[2];
 	size_t		i;
 	mlx_image_t	*collectable;
 
-	y = map->player[0];
-	x = map->player[1];
+	coor[0] = map->player[0];
+	coor[1] = map->player[1];
 	collectable = map->img->collectable;
-	if (map->map[y][x] == 'C')
+	if (map->map[coor[0]][coor[1]] == 'C')
 	{
-		map->map[y][x] = '0';
+		map->map[coor[0]][coor[1]] = '0';
 		i = -1;
 		while (++i < collectable->count)
 		{
-			if (collectable->instances[i].y / 64 == y
-				&& collectable->instances[i].x / 64 == x)
+			if (collectable->instances[i].y / 64 == coor[0]
+				&& collectable->instances[i].x / 64 == coor[1])
 			{
 				collectable->instances[i].enabled = false;
-				//map->img->collectable2->instances[i].enabled = false;
+				map->img->collectable2->instances[i].enabled = false;
 				break ;
 			}
 		}

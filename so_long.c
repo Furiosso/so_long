@@ -6,96 +6,39 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/25 15:04:19 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/07 21:27:04 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 static void	check_arg(int argc, char **argv);
-static void	check_map(char *map);
-static char	check_walls(char *line, int32_t len, int fd);
-static void	check_p_and_e(char c, char *line, int fd);
 
 int	main(int argc, char **argv)
 {
 	t_map	*map;
 
 	check_arg(argc, argv);
-	check_map(argv[1]);
+	call_check_map(argv[1]);
 	map = ft_calloc(1, sizeof(t_map));
 	if (!map)
-		finish("malloc", 12);
+		finish("malloc", 1);
 	flood_fill(argv[1], map);
-	play_game(map);
+	call_play_game(map);
 }
 
 static void	check_arg(int argc, char **argv)
 {
 	if (argc != 2)
-		end("Not enough or too many arguments", 1);
+		end("Not enough or too many arguments", 2);
 	if (!check_extention(argv[1], ".ber"))
-		end("Not a .ber document", 2);
+		end("Not a .ber document", 3);
 	if (!ft_strncmp(".ber", argv[1], 4))
-		end("Nameless document", 3);
+		end("Nameless document", 4);
 	check_name(argv[1]);
 }
 
-static void	check_map(char *map)
-{
-	int		fd;
-	int32_t	len[4];
-	char	wall;
-	char	*line;
-
-	fd = open(map, O_RDONLY);
-	if (fd < 0)
-		finish("open", 4);
-	line = check_first_line(fd);
-	get_width_and_height(&len[2], &len[3]);
-	len[0] = ft_strlen(line) - 1;
-	check_size(len[0] * 64, len[2], line, fd);
-	len[1] = 1;
-	line[len[0]] = '\0';
-	while (line)
-	{
-		wall = check_walls(line, len[0], fd);
-		free(line);
-		line = get_next_line(fd);
-		check_len(line, len, wall, fd);
-		len[1]++;
-	}
-	check_size((len[1] - 1) * 64, len[3], NULL, 0);
-	if (close(fd) < 0)
-		finish("close", 11);
-}
-
-static char	check_walls(char *line, int32_t len, int fd)
-{
-	char	wall;
-	char	*aux;
-
-	if (*line != '1' || *(line + len - 1) != '1')
-	{
-		if (*line == '0' || *(line + len - 1) == '0')
-			free_line_and_exit(line, fd, "Map not properly enclosed by walls");
-		free_line_and_exit(line, fd, "Forbidden characters found in map");
-	}
-	aux = line;
-	wall = 1;
-	while (*aux)
-	{
-		if (*aux != '1')
-			wall = 0;
-		if (!ft_strchr("01CEP", *aux))
-			free_line_and_exit(line, fd, "Forbidden characters found in map");
-		check_p_and_e(*aux, line, fd);
-		aux++;
-	}
-	return (wall);
-}
-
-static void	check_p_and_e(char c, char *line, int fd)
+void	check_p_and_e(char c, char *line, int fd)
 {
 	static int	e = 0;
 	static int	p = 0;
@@ -107,4 +50,25 @@ static void	check_p_and_e(char c, char *line, int fd)
 	if (e > 1 || p > 1)
 		free_line_and_exit(line, fd,
 			"Too many players or too many exits found");
+}
+
+void	get_width_and_height(int32_t *width, int32_t *height)
+{
+	mlx_t	*mlx;
+
+	mlx = mlx_init(1, 1, "", false);
+	if (!mlx)
+	{
+		if (ft_printf("%s\n", (mlx_strerror(mlx_errno))) < 0)
+			finish("ft_printf", 5);
+		exit(EXIT_FAILURE);
+	}
+	mlx_get_monitor_size(0, width, height);
+	mlx_terminate(mlx);
+}
+
+void	check_size(int32_t size1, int32_t size2, char *line, int fd)
+{
+	if (size1 > size2)
+		free_line_and_exit(line, fd, "Map provided bigger than monitor");
 }

@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 19:43:04 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/03 21:13:44 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/07 17:34:01 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,25 @@ void	check_enemies(t_map *map)
 	if (map->map[map->player[0]][map->player[1]] == 'F')
 	{
 		mlx_close_window(map->window);
-		ft_printf("YOU LOST!!!\n");
+		if (ft_printf("YOU LOST!!!\n") < 0)
+			clean_and_exit(map->texture, map);
 	}
 }
 
-void	charge_banner(t_map *map)
+void	charge_banner(t_map *map, t_texture *texture)
 {
-	/*mlx_image_t	*banner;
+	char	*steps;
 
-	banner = mlx_new_image(mlx, width * 64, 64);
-	if (!banner)
-		finish("mlx_new_image", 34);
-    ft_memset(banner->pixels, 227, width * 64 * 64 * sizeof(int32_t));
-    if (mlx_image_to_window(mlx, banner, 0, height * 64 - 64) < 0)
-		finish("mlx_image_to_window", 35);*/
 	if (map->counter)
 		mlx_delete_image(map->window, map->counter);
-	map->counter = mlx_put_string(map->window, ft_itoa(map->steps),
+	steps = ft_itoa(map->steps);
+	if (!steps)
+		clean_and_exit(texture, map);
+	map->counter = mlx_put_string(map->window, steps,
 			map->wide * 32 - 24, map->height * 64 - 40);
+	free(steps);
 	if (!map->counter)
-		finish("mlx_put_string", 35);
+		clean_and_exit(texture, map);
 }
 
 void	disable_images(mlx_image_t *collectable, mlx_image_t *foe)
@@ -47,15 +46,13 @@ void	disable_images(mlx_image_t *collectable, mlx_image_t *foe)
 
 void	ft_animation(void *param)
 {
-	t_map	*map;
-	int	i;
+	t_map		*map;
+	static int	i = 0;
 
 	map = param;
-	i = 0;
-	while (++i < 361)
+	i++;
+	if (i == 30)
 	{
-		if (i < 360)
-			continue ;
 		if (map->img->collectable->enabled == true)
 		{
 			map->img->collectable->enabled = false;
@@ -72,4 +69,10 @@ void	ft_animation(void *param)
 		}
 		i = 0;
 	}
+}
+
+void	put_to_win(t_map *map, mlx_image_t *temp, int *con, t_texture *t)
+{
+	if (mlx_image_to_window(map->window, temp, con[1] * 64, con[0] * 64) < 0)
+		clean_and_exit(t, map);
 }

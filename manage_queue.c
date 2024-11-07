@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:23:33 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/10/25 13:31:54 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/07 21:29:27 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_box	*create_box(t_box *queue, int y, int x)
 	{
 		if (queue)
 			clean_queue(queue);
-		exit(15);
+		exit(18);
 	}
 	box->y = y;
 	box->x = x;

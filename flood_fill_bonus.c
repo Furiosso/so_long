@@ -6,15 +6,12 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:28:53 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/03 19:49:06 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/07 17:00:24 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-static size_t	check_c(char *source, t_map *map);
-static void		count_cs(char *line, size_t *c);
-static char		find_p(char **copy, int32_t **origin, t_map *map);
 static void		bfs(char **copy, t_box *queue, size_t c, t_map *map);
 
 void	flood_fill(char *source, t_map *map)
@@ -38,68 +35,6 @@ void	flood_fill(char *source, t_map *map)
 	free(origin);
 	bfs(copy, queue, map->collectables, map);
 	clean_copy(copy);
-}
-
-static size_t	check_c(char *source, t_map *map)
-{
-	int		fd;
-	size_t	c;
-	char	*line;
-
-	fd = open(source, O_RDWR);
-	if (fd < 0)
-		free_map_and_finish(map, "open");
-	c = 0;
-	line = check_first_line(fd);
-	while (line)
-	{
-		count_cs(line, &c);
-		free(line);
-		line = get_next_line(fd);
-	}
-	if (close(fd) < 0)
-		free_map_and_finish(map, "close");
-	if (!c)
-		free_map_and_exit(map, "Collectables not found", NULL);
-	return (c);
-}
-
-static void	count_cs(char *line, size_t *c)
-{
-	while (*line)
-	{
-		if (*line == 'C')
-			(*c)++;
-		line++;
-	}
-}
-
-static char	find_p(char **copy, int32_t **origin, t_map *map)
-{
-	/*char	flag;
-
-	flag = 0;*/
-	(*origin)[0] = 1;
-	while (copy[(*origin)[0]])
-	{
-		(*origin)[1] = 1;
-		while (copy[(*origin)[0]][(*origin)[1]])
-		{
-			if (copy[(*origin)[0]][(*origin)[1]] == 'P')
-			{
-				//flag = 1;
-				map->player[0] = (*origin)[0];
-				map->player[1] = (*origin)[1];
-				//break ;
-				return (1);
-			}
-			(*origin)[1]++;
-		}
-		/*if (flag)
-			break ;*/
-		(*origin)[0]++;
-	}
-	return (0);
 }
 
 static void	bfs(char **copy, t_box *queue, size_t c, t_map *map)

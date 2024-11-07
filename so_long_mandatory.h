@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_extention.c                               :+:      :+:    :+:   */
+/*   so_long_mandatory.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 13:00:44 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/06 14:03:03 by dagimeno         ###   ########.fr       */
+/*   Created: 2024/11/07 12:11:44 by dagimeno          #+#    #+#             */
+/*   Updated: 2024/11/07 21:10:30 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef SO_LONG_MANDATORY_H
+# define SO_LONG_MANDATORY_H
 
-char	check_extention(char *name, char *extention)
-{
-	size_t	index[2];
+# include "so_long.h"
 
-	index[0] = ft_strlen(name) - 1;
-	index[1] = ft_strlen(extention) - 1;
-	while (name[index[0]] && extention[index[1]])
-	{
-		if (name[index[0]--] != extention[index[1]--])
-			return (0);
-	}
-	return (1);
-}
+void	check_map(char *map);
+char	check_walls(char *line, int32_t len, int fd);
+void	flood_fill(char *source, t_map *map);
+void	play_game(t_map *map);
+void	set_items_in_window(t_map *map, t_texture *texture, int *con);
+
+#endif
