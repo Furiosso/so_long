@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:06:37 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 21:33:20 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:07:41 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,7 @@ void	play_game(t_map *map)
 
 	mlx = mlx_init(map->wide * 64, (map->height - 1) * 64, "SO LONG", true);
 	if (!mlx)
-	{
-		if (!ft_printf("%s\n", (mlx_strerror(mlx_errno))))
-			free_map_and_finish(map, "ft_printf");
-		exit(EXIT_FAILURE);
-	}
+		end(mlx_strerror(mlx_errno), 22);
 	map->window = mlx;
 	map->texture = ft_calloc(sizeof(t_texture), 1);
 	map->img = ft_calloc(sizeof(t_image), 1);
@@ -45,38 +41,38 @@ static void	charge_textures(t_texture *texture, t_map *map)
 {
 	texture->background = mlx_load_png("./textures/background.png");
 	if (!texture->background)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->wall = mlx_load_png("./textures/muro.png");
 	if (!texture->wall)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->player = mlx_load_png("./textures/player.png");
 	if (!texture->player)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->collectable = mlx_load_png("./textures/collectable.png");
 	if (!texture->collectable)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->exit = mlx_load_png("./textures/exit.png");
 	if (!texture->exit)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 }
 
 static void	charge_images(t_image *img, t_texture *texture, t_map *map)
 {
 	img->background = mlx_texture_to_image(map->window, texture->background);
 	if (!img->background)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	img->wall = mlx_texture_to_image(map->window, texture->wall);
 	if (!img->wall)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	img->player = mlx_texture_to_image(map->window, texture->player);
 	if (!img->player)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	img->collectable = mlx_texture_to_image(map->window, texture->collectable);
 	if (!img->collectable)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	img->exit = mlx_texture_to_image(map->window, texture->exit);
 	if (!img->exit)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 }
 
 static void	ft_hook(mlx_key_data_t keydata, void *param)

@@ -6,22 +6,26 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 11:51:18 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 21:28:08 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:15:32 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	finish(char *s, int err_key)
+void	finish(const char *s, int err_key)
 {
 	perror(s);
 	exit(err_key);
 }
 
-void	end(char *s, int err_key)
+void	end(const char *s, int err_key)
 {
-	if (ft_printf("Error\n%s\n", s) < 0)
-		finish("ft_printf", 9);
+	if (write(2, "Error\n", 6) < 0)
+		finish("write", 9);
+	if (write(2, s, ft_strlen(s)) < 0)
+		finish("write", 9);
+	if (write(2, "\n", 1) < 0)
+		finish("write", 9);
 	exit(err_key);
 }
 

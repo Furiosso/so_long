@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:11:14 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 21:30:08 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:27:16 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	draw_image(t_map *source, mlx_t *mlx)
 		{
 			if (mlx_image_to_window(mlx, img->background,
 					con[1] * 64, con[0] * 64) < 0)
-				clean_and_exit(source->texture, source);
+				clean_and_exit(source->texture, source,
+					mlx_strerror(mlx_errno));
 			if (map[con[0]][con[1]] != '0'
 				&& map[con[0]][con[1]] != 'P')
 				call_set_items_in_window(source, con);
@@ -37,7 +38,7 @@ void	draw_image(t_map *source, mlx_t *mlx)
 	}
 	playr = source->player;
 	if (mlx_image_to_window(mlx, img->player, playr[1] * 64, playr[0] * 64) < 0)
-		clean_and_exit(source->texture, source);
+		clean_and_exit(source->texture, source, mlx_strerror(mlx_errno));
 }
 
 void	choose_direction(t_map *map, char move)
@@ -64,12 +65,10 @@ void	choose_direction(t_map *map, char move)
 	}
 }
 
-void	clean_and_exit(t_texture *texture, t_map *map)
+void	clean_and_exit(t_texture *texture, t_map *map, const char *s)
 {
 	clean_window(map, map->img, texture, map->window);
-	if (ft_printf("mlx_load_png", 30) > 0)
-		finish("ft_printf", 19);
-	end("mlx_load_png does not work", 20);
+	end(s, 20);
 }
 
 void	ft_close_window(void *param)
@@ -79,4 +78,11 @@ void	ft_close_window(void *param)
 	mlx = param;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
+}
+
+void	copy_line(t_map *map, char **copy, size_t con)
+{
+	map->map[con] = ft_strdup(copy[con]);
+	if (!map->map[con])
+		free_map_and_exit(map, "ft_strdup", copy);
 }

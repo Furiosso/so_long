@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 12:48:02 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 21:28:57 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:47:47 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 size_t		get_height(char *map);
 static char	*record_boxes_info(char *line, size_t len);
-void		clean_copy(char **copy);
 
 char	**copy_map(char *source, t_map *map)
 {
@@ -25,9 +24,9 @@ char	**copy_map(char *source, t_map *map)
 
 	copy = ft_calloc(sizeof(char *), map->height);
 	if (!copy)
-		finish("malloc", 12);
+		finish("ft_calloc", 12);
 	fd = open(source, O_RDONLY);
-	if (fd < 0)
+	if (!copy || fd < 0)
 		finish("open", 13);
 	line = get_next_line(fd);
 	map->wide = ft_strlen(line) - 1;
@@ -35,7 +34,7 @@ char	**copy_map(char *source, t_map *map)
 	while (line)
 	{
 		copy[++con] = record_boxes_info(line, map->wide);
-		map->map[con] = ft_strdup(copy[con]);
+		copy_line(map, copy, con);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -79,7 +78,7 @@ static char	*record_boxes_info(char *line, size_t len)
 
 	row = ft_calloc(sizeof(char), len + 1);
 	if (!row)
-		finish("malloc", 17);
+		finish("ft_calloc", 17);
 	i = 0;
 	while (i < len)
 	{

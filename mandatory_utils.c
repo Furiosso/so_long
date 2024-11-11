@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:36:01 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 21:32:17 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:50:41 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,10 @@ void	set_items_in_window(t_map *map, t_texture *texture, int *con)
 	if (map->map[con[0]][con[1]] == 'E')
 		temp = map->img->exit;
 	if (!temp)
-		clean_and_exit(texture, map);
-	if (temp)
-	{
-		mlx = map->window;
-		if (mlx_image_to_window(mlx, temp, con[1] * 64, con[0] * 64) < 0)
-			clean_and_exit(texture, map);
-	}
+		clean_and_exit(texture, map, "Incorrect map");
+	mlx = map->window;
+	if (mlx_image_to_window(mlx, temp, con[1] * 64, con[0] * 64) < 0)
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 }
 
 void	call_check_map(char *map)

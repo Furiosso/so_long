@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:36:37 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 21:34:20 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:51:36 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,10 @@ void	set_items_in_window(t_map *map, t_texture *texture, int *con)
 		temp[1] = map->img->foe2;
 	}
 	if (!temp[0])
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, "Incorrect map");
 	if (temp[1])
 		put_to_win(map, temp[1], con, texture);
-	if (temp[0])
-		put_to_win(map, temp[0], con, texture);
+	put_to_win(map, temp[0], con, texture);
 }
 
 void	call_check_map(char *map)

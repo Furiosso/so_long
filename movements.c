@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 11:46:35 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 15:07:50 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:52:23 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	move_player(t_map *map, char move)
 		check_collectables(map);
 	map->steps++;
 	if (ft_printf("STePs: %u\n", map->steps) < 0)
-		clean_and_exit(map->texture, map);
+		clean_and_exit(map->texture, map, "ft_printf fail");
 }
 
 static void	check_collectables(t_map *map)

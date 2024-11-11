@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 21:27:04 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:04:54 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	get_width_and_height(int32_t *width, int32_t *height)
 	if (!mlx)
 	{
 		if (ft_printf("%s\n", (mlx_strerror(mlx_errno))) < 0)
-			finish("ft_printf", 5);
+			end("ft_printf fail", 5);
 		exit(EXIT_FAILURE);
 	}
 	mlx_get_monitor_size(0, width, height);

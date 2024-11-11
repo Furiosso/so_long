@@ -6,13 +6,13 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 16:19:24 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 21:27:32 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:16:01 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	free_line_and_exit(char *line, int fd, char *s)
+void	free_line_and_exit(char *line, int fd, const char *s)
 {
 	while (line)
 	{
@@ -24,7 +24,7 @@ void	free_line_and_exit(char *line, int fd, char *s)
 	end(s, 11);
 }
 
-void	free_map_and_exit(t_map *map, char *s, char **copy)
+void	free_map_and_exit(t_map *map, const char *s, char **copy)
 {
 	if (copy)
 		clean_copy(copy);
@@ -36,7 +36,7 @@ void	free_map_and_exit(t_map *map, char *s, char **copy)
 	end(s, 7);
 }
 
-void	free_map_and_finish(t_map *map, char *s)
+void	free_map_and_finish(t_map *map, const char *s)
 {
 	if (map->map)
 		free(map->map);
@@ -52,6 +52,6 @@ void	check_exit(t_map *map)
 	{
 		mlx_close_window(map->window);
 		if (ft_printf("Total movements: %u. Kudos!!!\n", map->steps) < 0)
-			clean_and_exit(map->texture, map);
+			clean_and_exit(map->texture, map, "ft_printf fail");
 	}
 }

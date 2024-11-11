@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:58:21 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 21:35:53 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:08:10 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@ void	play_game(t_map *map)
 {
 	map->window = mlx_init(map->wide * 64, map->height * 64, "SO LONG", true);
 	if (!map->window)
-	{
-		if (ft_printf("%s\n", (mlx_strerror(mlx_errno))) < 0)
-			free_map_and_finish(map, "mlx_init");
-		exit (EXIT_FAILURE);
-	}
+		end(mlx_strerror(mlx_errno), 22);
 	map->texture = ft_calloc(sizeof(t_texture), 1);
 	map->img = ft_calloc(sizeof(t_image), 1);
 	if (!map->texture || !map->img)
@@ -44,56 +40,56 @@ static void	charge_textures(t_texture *texture, t_map *map)
 {
 	texture->background = mlx_load_png("./textures/background.png");
 	if (!texture->background)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->wall = mlx_load_png("./textures/muro.png");
 	if (!texture->wall)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->player = mlx_load_png("./textures/player.png");
 	if (!texture->player)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->collectable = mlx_load_png("./textures/collectable.png");
 	if (!texture->collectable)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->collectable2 = mlx_load_png("./textures/collectable2.png");
 	if (!texture->collectable2)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->exit = mlx_load_png("./textures/exit.png");
 	if (!texture->exit)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->foe = mlx_load_png("./textures/foe2.png");
 	if (!texture->foe)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 	texture->foe2 = mlx_load_png("./textures/foe.png");
 	if (!texture->foe2)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 }
 
 static void	charge_images(t_image *img, t_texture *t, t_map *map)
 {
 	img->background = mlx_texture_to_image(map->window, t->background);
 	if (!img->background)
-		clean_and_exit(t, map);
+		clean_and_exit(t, map, mlx_strerror(mlx_errno));
 	img->wall = mlx_texture_to_image(map->window, t->wall);
 	if (!img->wall)
-		clean_and_exit(t, map);
+		clean_and_exit(t, map, mlx_strerror(mlx_errno));
 	img->player = mlx_texture_to_image(map->window, t->player);
 	if (!img->player)
-		clean_and_exit(t, map);
+		clean_and_exit(t, map, mlx_strerror(mlx_errno));
 	img->collectable = mlx_texture_to_image(map->window, t->collectable);
 	if (!img->collectable)
-		clean_and_exit(t, map);
+		clean_and_exit(t, map, mlx_strerror(mlx_errno));
 	img->collectable2 = mlx_texture_to_image(map->window, t->collectable2);
 	if (!img->collectable2)
-		clean_and_exit(t, map);
+		clean_and_exit(t, map, mlx_strerror(mlx_errno));
 	img->exit = mlx_texture_to_image(map->window, t->exit);
 	if (!img->exit)
-		clean_and_exit(t, map);
+		clean_and_exit(t, map, mlx_strerror(mlx_errno));
 	img->foe = mlx_texture_to_image(map->window, t->foe);
 	if (!img->foe)
-		clean_and_exit(t, map);
+		clean_and_exit(t, map, mlx_strerror(mlx_errno));
 	img->foe2 = mlx_texture_to_image(map->window, t->foe2);
 	if (!img->foe2)
-		clean_and_exit(t, map);
+		clean_and_exit(t, map, mlx_strerror(mlx_errno));
 	disable_images(img->collectable2, img->foe2);
 }
 

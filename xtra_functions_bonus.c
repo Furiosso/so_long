@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 19:43:04 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/07 17:34:01 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:07:08 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_enemies(t_map *map)
 	{
 		mlx_close_window(map->window);
 		if (ft_printf("YOU LOST!!!\n") < 0)
-			clean_and_exit(map->texture, map);
+			clean_and_exit(map->texture, map, "ft_printf fail");
 	}
 }
 
@@ -30,12 +30,12 @@ void	charge_banner(t_map *map, t_texture *texture)
 		mlx_delete_image(map->window, map->counter);
 	steps = ft_itoa(map->steps);
 	if (!steps)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, "ft_itoa fail");
 	map->counter = mlx_put_string(map->window, steps,
 			map->wide * 32 - 24, map->height * 64 - 40);
 	free(steps);
 	if (!map->counter)
-		clean_and_exit(texture, map);
+		clean_and_exit(texture, map, mlx_strerror(mlx_errno));
 }
 
 void	disable_images(mlx_image_t *collectable, mlx_image_t *foe)
@@ -74,5 +74,5 @@ void	ft_animation(void *param)
 void	put_to_win(t_map *map, mlx_image_t *temp, int *con, t_texture *t)
 {
 	if (mlx_image_to_window(map->window, temp, con[1] * 64, con[0] * 64) < 0)
-		clean_and_exit(t, map);
+		clean_and_exit(t, map, mlx_strerror(mlx_errno));
 }
