@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:50:50 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/11 19:04:54 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:32:31 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	check_arg(int argc, char **argv)
 		end("Not enough or too many arguments", 2);
 	if (!check_extention(argv[1], ".ber"))
 		end("Not a .ber document", 3);
-	if (!ft_strncmp(".ber", argv[1], 4))
+		if (!ft_strncmp(".ber", argv[1], 4))
 		end("Nameless document", 4);
 	check_name(argv[1]);
 }

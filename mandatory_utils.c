@@ -6,7 +6,7 @@
 /*   By: dagimeno <dagimeno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 14:36:01 by dagimeno          #+#    #+#             */
-/*   Updated: 2024/11/11 19:50:41 by dagimeno         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:49:33 by dagimeno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_map(char *map)
 
 	fd = open(map, O_RDONLY);
 	if (fd < 0)
-		finish("open", 21);
+		finish(map, 21);
 	line = check_first_line(fd);
 	get_width_and_height(&len[2], &len[3]);
 	len[0] = ft_strlen(line) - 1;
